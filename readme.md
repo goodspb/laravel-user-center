@@ -34,7 +34,7 @@
 <tbody>
     <tr>
         <td>加入地址选项</td>
-        <td>NO</td>
+        <td>YES</td>
     </tr>
     <tr>
         <td>加入 Oauth2.0 接口, 完善 用户中心 概念</td>
