@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         //写入管理员
         $this->call(UserTableSeeder::class);
+        //写入区域
+        $this->call(RegionTableSeeder::class);
 
         Model::reguard();
     }
