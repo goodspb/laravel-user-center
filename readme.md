@@ -11,7 +11,8 @@
 3. 执行 `php artisan key:generate` , 生成随机 key
 4. 执行 `php artisan migrate --seed` , 导入表结构和数据内容
 5. 配置 nginx , 指向目录 `public`
-6. 完事大吉
+6. 设置 `storage` 和 `bootstrap/cache` 和 `public/upload` 可写权限 
+7. 完事大吉
 
 ### 开发
 
