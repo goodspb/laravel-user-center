@@ -36,7 +36,8 @@ class UserController extends BaseController
             'email' => 'required|email',
             'password' => 'required|confirmed|min:6',
         ]);
-        $user->fill(Input::all());
+        $user->username = Input::get('username');
+        $user->email = Input::get('email');
         return $this->saveUser($user, $request);
     }
 
