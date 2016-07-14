@@ -22,7 +22,7 @@
 2. AdminLTE2 模板
 3. 权限包 Entrust , [文档](https://github.com/Zizaco/entrust) 
 
-### Todo 
+### Todo List
 
 <table>
 <thead>
@@ -32,6 +32,10 @@
     </tr>
 </thead>
 <tbody>
+    <tr>
+        <td>加入地址选项</td>
+        <td>NO</td>
+    </tr>
     <tr>
         <td>加入 Oauth2.0 接口, 完善 用户中心 概念</td>
         <td>NO</td>
