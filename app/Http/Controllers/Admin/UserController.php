@@ -79,9 +79,9 @@ class UserController extends BaseController
         return redirect()->back()->withErrors(['error' => trans("common.{$type}_fail")]);
     }
 
-    public function postAvatar()
+    public function postAvatar($id)
     {
-        return $this->updateAvatar($this->authUser['id']);
+        return $this->updateAvatar($id > 0 ? intval($id) : $this->authUser['id']);
     }
 
     public function postDelete()

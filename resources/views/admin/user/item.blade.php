@@ -95,7 +95,7 @@
                             <label>
                                 <img id="avatar-img" style="cursor: pointer" class="profile-user-img img-responsive img-circle pull-left" src="{{ isset($item) ? $item->profile->avatar : \App\Library\Avatar::getAvatar(Config::get('auth.default_avatar')) }}" alt="User profile picture">
                                 <input id="avatar-input" type="hidden" name="avatar" value="{{ isset($item) ? $item->profile->avatar : Config::get('auth.default_avatar') }}" />
-                                <input style="display: none" type="file" name="avatar-file" id="avatar" />
+                                <input style="display: none" type="file" name="avatar-file" data-url="{{ url('admin/user/avatar', ['id' => $item->id]) }}" id="avatar" />
                             </label>
                         </div>
                     </div>
@@ -145,7 +145,7 @@
 <script>
     $(function(){
         $('#avatar').AjaxFileUpload({
-            action: "{{ url('admin/user/avatar') }}",
+            action: $('#avatar').attr('data-url'),
             onComplete: function (filename, response) {
                 if (response.status == 'success') {
                     $('#avatar-img').attr('src', '/' + response.path + '?t=' + Math.random());
