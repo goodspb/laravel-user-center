@@ -5,6 +5,7 @@ use App\Library\Avatar;
 
 class UserProfile extends Model
 {
+    protected $table = 'user_profiles';
     protected $primaryKey = 'user_id';
 
     public function getAvatarAttribute($value)

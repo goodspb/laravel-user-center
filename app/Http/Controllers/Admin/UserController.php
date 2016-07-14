@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Region;
 use App\Models\Role;
 use Input, Response, Exception;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class UserController extends BaseController
 
     public function getAdd()
     {
-        view()->share('roles', Role::all());
+        $this->getAllRoles();
+        $this->getRegionProvinces();
         return view('admin.user.item');
     }
 
@@ -43,7 +45,8 @@ class UserController extends BaseController
 
     public function getEdit($id)
     {
-        view()->share('roles', Role::all());
+        $this->getAllRoles();
+        $this->getRegionProvinces();
         return $this->getBaseItem('user', $id, 'admin.user.item');
     }
 
@@ -59,9 +62,12 @@ class UserController extends BaseController
             'mobile' => 'digits:11',
             'nickname' => 'max:256',
             'description' => 'max:1000',
-            'sex' => 'required|digits_between:0,2',
+            'sex' => 'digits_between:0,2',
             'password' => 'confirmed|min:6',
             'roles' => 'array',
+            'province' => 'digits_between:1,4000',
+            'city' => 'digits_between:1,4000',
+            'area' => 'digits_between:1,4000',
         ]);
         $password = Input::get('password', '');
         if (!empty($password)) {
@@ -71,9 +77,9 @@ class UserController extends BaseController
         $isNew = $user->isNew();
         $type = $isNew ? 'add' : 'edit';
         $isNew or $user->saveRoles(Input::get('roles'));
-        if ($user->save()) {
-            $isNew and $user->saveRoles(Input::get('roles'), true);
+        if ($user->save([], false)) {
             $user->saveProfile(Input::all());
+            $isNew and $user->saveRoles(Input::get('roles'), true);
             return redirect()->back()->with('success', trans("common.{$type}_success"));
         }
         return redirect()->back()->withErrors(['error' => trans("common.{$type}_fail")]);
@@ -87,5 +93,41 @@ class UserController extends BaseController
     public function postDelete()
     {
         return $this->doDelete('user');
+    }
+
+    protected function getAllRoles()
+    {
+        $roles = Role::all();
+        view()->share('roles', $roles);
+        return $roles;
+    }
+
+    public function getRegion()
+    {
+        $type = intval(Input::get('type', 0));
+        $pid = intval(Input::get('pid', 0));
+        if ($pid <= 0) {
+            return Response::json(array(
+                'status' => -1,
+                'error' => 'param pid is not found'
+            ));
+        }
+        return Response::json(array(
+            'status' => 0,
+            'list' => (new Region())->getByPid($pid, $type)
+        ));
+
+    }
+
+    /**
+     * @param int $type 0:省; 1:市; 2:区
+     * @param null $viewKey
+     * @return mixed
+     */
+    protected function getRegionProvinces()
+    {
+        $result = (new Region)->getProvinces();
+        view()->share('provinces', $result);
+        return $result;
     }
 }

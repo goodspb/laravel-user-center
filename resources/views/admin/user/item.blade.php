@@ -102,6 +102,33 @@
                     </div>
                     @endif
                     <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">{{ trans('common.province') }}</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="province" id="province">
+                            <option value="0">{{ trans('common.select') }}</option>
+                            @foreach($provinces as $province)
+                                <option @if(isset($item) && $province['id'] == $item->profile->province) selected @endif value="{{ $province['id'] }}">{{ $province['name'] }}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">{{ trans('common.city') }}</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="city" id="city">
+                                <option value="0">{{ trans('common.select') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">{{ trans('common.area') }}</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="area" id="area">
+                                <option value="0">{{ trans('common.select') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="description" class="col-sm-2 control-label">{{ trans('common.description') }}</label>
                         <div class="col-sm-10">
                             <textarea id="description" title="description" name="description" class="form-control">{{ isset($item) ?  $item->profile->description : old('description') }}</textarea>
@@ -160,6 +187,45 @@
         $("#role-select").select2({
             placeholder: "{{ trans('common.role_select') }}"
         });
+
+        $('#province').change(function(){
+            var $option = $(this).find("option:selected");
+            getRegion('city',$option.val(),1,0);
+        });
+
+        $('#city').change(function() {
+            var $option = $(this).find("option:selected");
+            getRegion('area',$option.val(),2,0);
+        });
+
+        var provinceDefaultId = $('#province').find("option:selected").val();
+        var cityDefaultId = {{ isset($item) ? (int)$item->profile->city : 0 }};
+        var areaDefaultId = {{ isset($item) ? (int)$item->profile->area : 0}};
+        if (provinceDefaultId > 0) {
+            getRegion('city', provinceDefaultId, 1, cityDefaultId);
+            if (cityDefaultId > 0) {
+                getRegion('area', cityDefaultId, 2, areaDefaultId);
+            }
+        }
+
     });
+
+    function getRegion(_nextId, _pid, _type, _defalutId) {
+        var $region = $('#'+_nextId);
+        $region.html('<option value="0" selected>{{ trans('common.select') }}</option>');
+        $.get('/admin/user/region?type='+_type+'&pid='+_pid,function(data){
+            if (data.status == 0) {
+                var _list = data.list;
+                if ($(_list).first().length != 0) {
+                    $region.show();
+                    $.each(_list, function(i,val){
+                        $region.append('<option '+( val.id == _defalutId ? 'selected' : '' )+' value="'+val.id+'">'+val.name+'</option>');
+                    });
+                } else {
+                    $region.hide();
+                }
+            }
+        });
+    }
 </script>
 @endsection

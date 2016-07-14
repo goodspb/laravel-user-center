@@ -30,6 +30,9 @@ return [
     'password_confirmation' => '确认密码',
     'email' => '邮箱',
     'mobile' => '手机号',
+    'province' => '省份',
+    'city' => '城市',
+    'area' => '区/县',
     'description' => '个人描述',
     'sex' => '性别',
     'sex_select' => '请选择性别',
@@ -38,7 +41,8 @@ return [
     'sex_2' => '女' ,
     'role' => '角色',
     'role_select' => '请选择角色',
-
+    'select' => '请选择',
+    
     'upload' => [
         'empty' => '文件未空',
         'extension_not_allow' => '文件类型不允许',
