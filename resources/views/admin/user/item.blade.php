@@ -89,16 +89,18 @@
                             </select>
                         </div>
                     </div>
+                    @if (isset($item))
                     <div class="form-group">
                         <label for="avatar" class="col-sm-2 control-label">{{ trans('common.avatar') }}</label>
                         <div class="col-sm-10">
                             <label>
-                                <img id="avatar-img" style="cursor: pointer" class="profile-user-img img-responsive img-circle pull-left" src="{{ isset($item) ? $item->profile->avatar : \App\Library\Avatar::getAvatar(Config::get('auth.default_avatar')) }}" alt="User profile picture">
-                                <input id="avatar-input" type="hidden" name="avatar" value="{{ isset($item) ? $item->profile->avatar : Config::get('auth.default_avatar') }}" />
+                                <img id="avatar-img" style="cursor: pointer" class="profile-user-img img-responsive img-circle pull-left" src="{{ $item->profile->avatar }}" alt="User profile picture">
+                                <input id="avatar-input" type="hidden" name="avatar" value="{{ $item->profile->avatar }}" />
                                 <input style="display: none" type="file" name="avatar-file" data-url="{{ url('admin/user/avatar', ['id' => $item->id]) }}" id="avatar" />
                             </label>
                         </div>
                     </div>
+                    @endif
                     <div class="form-group">
                         <label for="description" class="col-sm-2 control-label">{{ trans('common.description') }}</label>
                         <div class="col-sm-10">

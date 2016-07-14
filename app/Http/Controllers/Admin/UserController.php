@@ -60,7 +60,6 @@ class UserController extends BaseController
             'nickname' => 'max:256',
             'description' => 'max:1000',
             'sex' => 'required|digits_between:0,2',
-            'avatar' => 'required',
             'password' => 'confirmed|min:6',
             'roles' => 'array',
         ]);
