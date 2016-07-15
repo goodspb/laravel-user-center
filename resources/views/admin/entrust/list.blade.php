@@ -59,7 +59,7 @@
                     <!-- /.box-body -->
                     <div class="box-footer clearfix">
                         <ul class="pagination pagination-sm no-margin pull-left">
-                            <li><a href="#"> {{ $lists->currentPage() }} / {{ $lists->lastPage() }}</a></li>
+                            <li><a href="#"> {{ $lists->currentPage() }} / {{ $lists->lastPage() ?: 1 }}</a></li>
                         </ul>
                         @if ($lists->lastPage() != 1)
                         <ul class="pagination pagination-sm no-margin pull-right">
