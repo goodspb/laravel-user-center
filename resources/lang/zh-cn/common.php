@@ -42,7 +42,12 @@ return [
     'role' => '角色',
     'role_select' => '请选择角色',
     'select' => '请选择',
-    
+    'oauth_client_id' => '客户端ID',
+    'oauth_client_secret' => '客户端秘钥',
+    'oauth_client_name' => '客户端名称',
+    'oauth_client_redirect_uri' => '回调地址',
+    'oauth_client_scope' => '权限范围',
+
     'upload' => [
         'empty' => '文件未空',
         'extension_not_allow' => '文件类型不允许',

@@ -26,7 +26,17 @@
                     <li><a href="{{ url('admin/permission/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.permission') }}</a></li>
                 </ul>
             </li>
-
+            <li class="active treeview">
+                <a href="#">
+                    <i class="fa fa-files-o"></i>
+                    <span>{{ trans('admin.menu_list.oauth') }}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ url('admin/oauth/client/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.oauth_client') }}</a></li>
+                    <li><a href="{{ url('admin/oauth/scope/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.oauth_scope') }}</a></li>
+                </ul>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

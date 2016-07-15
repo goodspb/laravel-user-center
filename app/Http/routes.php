@@ -15,12 +15,15 @@ Route::get('/', function () {
     return redirect('admin');
 });
 
-Route::group(['prefix' => '/auth', 'namespace' => 'Auth'], function () {
+Route::group(['prefix' => '/auth', 'namespace' => 'Auth', 'middleware' => 'csrf'], function () {
     Route::controller('/forgot', 'PasswordController');
     Route::controller('/', 'AuthController');
 });
 
-Route::group(['prefix' => '/admin' , 'namespace' => 'Admin' , 'middleware' => ['auth', 'role:admin']] , function () {
+Route::group(['prefix' => '/admin' , 'namespace' => 'Admin' , 'middleware' => ['auth', 'role:admin', 'csrf']] , function () {
+    Route::group(['prefix' => '/oauth', 'namespace' => 'Oauth' ], function() {
+        Route::controller('/client', 'ClientController');
+    });
     Route::controller('/permission', 'PermissionController');
     Route::controller('/role', 'RoleController');
     Route::controller('/user', 'UserController');

@@ -21,7 +21,15 @@ return [
         'user_edit' => '修改用户资料',
         'permission_role' => '管理权限',
         'role_user' => '管理角色',
-
+        'oauth' => 'Oauth接口管理',
+        'oauth_client' => 'Oauth客户端管理',
+        'oauth_client_add' => '添加Oauth客户端管理',
+        'oauth_client_edit' => '修改Oauth客户端管理',
+        'oauth_client_list' => 'Oauth客户端管理列表',
+        'oauth_scope'  => 'Oauth授权范围管理',
+        'oauth_scope_list'  => 'Oauth授权范围管理列表',
+        'oauth_scope_edit'  => '修改Oauth授权范围管理列表',
+        'oauth_scope_add'  => '添加Oauth授权范围管理列表',
     ],
     'role' => [
         'name' => '角色标识',

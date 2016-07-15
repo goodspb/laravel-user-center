@@ -171,6 +171,7 @@
 @section('js')
 <script type="text/javascript" src="{{ Config::get('app.cdn_url') }}plugins/AjaxFileUpload/jquery.ajaxfileupload.js"></script>
 <script src="{{ Config::get('app.cdn_url') }}plugins/select2/select2.full.min.js"></script>
+<script src="{{ Config::get('app.cdn_url') }}plugins/select2/i18n/zh-CN.js"></script>
 <script>
     $(function(){
         $('#avatar').AjaxFileUpload({
@@ -185,7 +186,8 @@
             }
         });
         $("#role-select").select2({
-            placeholder: "{{ trans('common.role_select') }}"
+            placeholder: "{{ trans('common.role_select') }}",
+            language: "zh-CN"
         });
 
         $('#province').change(function(){
