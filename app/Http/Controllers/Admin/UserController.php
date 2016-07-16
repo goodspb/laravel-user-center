@@ -56,6 +56,11 @@ class UserController extends BaseController
         return $this->saveUser($user, $request);
     }
 
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     protected function saveUser($user, Request $request)
     {
         $this->validate($request, [
@@ -76,10 +81,9 @@ class UserController extends BaseController
         $user->mobile = Input::get('mobile', '');
         $isNew = $user->isNew();
         $type = $isNew ? 'add' : 'edit';
-        $isNew or $user->saveRoles(Input::get('roles'));
-        if ($user->save([], false)) {
+        if ($user->save()) {
             $user->saveProfile(Input::all());
-            $isNew and $user->saveRoles(Input::get('roles'), true);
+            $user->saveRoles(Input::get('roles'));
             return redirect()->back()->with('success', trans("common.{$type}_success"));
         }
         return redirect()->back()->withErrors(['error' => trans("common.{$type}_fail")]);

@@ -58,9 +58,11 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $result = User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        $result->saveProfile();
+        return $result;
     }
 }

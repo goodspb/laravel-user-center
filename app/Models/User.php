@@ -42,16 +42,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasOne('App\Models\UserProfile', 'user_id', 'id');
     }
 
-    public function save(array $options = [], $saveProfile = true)
-    {
-        //生成用户资料如果不存在
-        $result = parent::save($options);
-        if ($result && (!$this->profile) && $saveProfile) {
-            $this->saveProfile();
-        }
-        return $result;
-    }
-
     public function saveProfile($data = [])
     {
         $profile = $this->profile;
@@ -70,13 +60,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->profile()->save($profile);
     }
 
-    public function saveRoles($data, $save = false)
+    public function saveRoles($data)
     {
         $this->detachRoles();
         if (!empty($data)) {
             $this->attachRoles($data);
         }
-        $save and $this->save();
     }
 
     public function delete()
