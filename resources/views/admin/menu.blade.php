@@ -35,6 +35,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ url('admin/oauth/client/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.oauth_client') }}</a></li>
                     <li><a href="{{ url('admin/oauth/scope/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.oauth_scope') }}</a></li>
+{{--                    <li><a href="{{ url('admin/oauth/grant/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.oauth_grant') }}</a></li>--}}
                 </ul>
             </li>
         </ul>

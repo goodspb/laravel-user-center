@@ -36,12 +36,17 @@ class OauthClient extends Model
 
     public function endpoint()
     {
-        return $this->hasOne('OauthClientEndpoint', 'client_id');
+        return $this->hasOne('App\Models\OauthClientEndpoint', 'client_id');
     }
 
     public function scopes()
     {
-        return $this->belongsToMany('OauthScope', 'oauth_client_scopes', 'client_id', 'scope_id');
+        return $this->belongsToMany('App\Models\OauthScope', 'oauth_client_scopes', 'client_id', 'scope_id');
+    }
+
+    public function grants()
+    {
+        return $this->belongsToMany('App\Models\OauthGrant', 'oauth_client_grants', 'client_id', 'grant_id');
     }
 
     public function save(array $options = array())
@@ -51,33 +56,40 @@ class OauthClient extends Model
         return parent::save($options);
     }
 
-    public function saveEndpoint($input)
+    public function saveEndpoint($redirectUri)
     {
-        $oauthEndpoint = $this->oauthEndpoint;
+        $oauthEndpoint = $this->endpoint;
         if (is_null($oauthEndpoint)) {
             $oauthEndpoint = new OauthClientEndpoint();
         }
         $oauthEndpoint->client_id = $this->id;
-        $oauthEndpoint->redirect_uri = !empty($input['redirect_uri']) ? $input['redirect_uri'] : $oauthEndpoint->redirect_uri;
-        $this->oauthEndpoint()->save($oauthEndpoint);
+        $oauthEndpoint->redirect_uri = !empty($redirectUri) ? $redirectUri : $oauthEndpoint->redirect_uri;
+        $this->endpoint()->save($oauthEndpoint);
     }
 
-    public function saveScope($input)
+    public function saveScope($scopes)
     {
         $oldScopes = $this->scopes;
         foreach ($oldScopes as $scope) {
             $this->scopes()->detach($scope->id);
         }
-        $scopes = $input['scopes'];
         if ($scopes) {
-            $scopeArr = explode(",", $scopes);
-            foreach ($scopeArr as $name) {
-                $scopeId = DB::table('oauth_scopes')->where('name', $name)->pluck('id');
-                if ($scopeId) {
-                    $this->scopes()->attach($scopeId);
-                }
+            foreach ($scopes as $scopeId) {
+                $this->scopes()->attach($scopeId);
             }
+        }
+    }
 
+    public function saveGrant($grants)
+    {
+        $oldGrants = $this->grants;
+        foreach ($oldGrants as $oldGrant) {
+            $this->grants()->detach($oldGrant->id);
+        }
+        if ($grants) {
+            foreach ($grants as $grantId) {
+                $this->grants()->attach($grantId);
+            }
         }
     }
 

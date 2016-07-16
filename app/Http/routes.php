@@ -22,7 +22,9 @@ Route::group(['prefix' => '/auth', 'namespace' => 'Auth', 'middleware' => 'csrf'
 
 Route::group(['prefix' => '/admin' , 'namespace' => 'Admin' , 'middleware' => ['auth', 'role:admin', 'csrf']] , function () {
     Route::group(['prefix' => '/oauth', 'namespace' => 'Oauth' ], function() {
+        Route::controller('/grant', 'GrantController');
         Route::controller('/client', 'ClientController');
+        Route::controller('/scope', 'ScopeController');
     });
     Route::controller('/permission', 'PermissionController');
     Route::controller('/role', 'RoleController');

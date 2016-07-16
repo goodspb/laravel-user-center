@@ -43,8 +43,8 @@
                                     <td>{{ $list->created_at }}</td>
                                     <td>{{ $list->updated_at }}</td>
                                     <td>
-                                        <a href="{{ url('admin/user/edit', ['id' => $list->id]) }}">{{ trans('common.manage') }}</a>
-                                        <a href="#" class="delete" data-name="{{ $list->email }}" data-url="{{ url('admin/user/delete') }}" data-id="{{ $list->id }}" data-toggle="modal" data-target="#doDelete">{{ trans('common.delete') }}</a>
+                                        <a href="{{ url('admin/oauth/client/edit', ['id' => $list->id]) }}">{{ trans('common.manage') }}</a>
+                                        <a href="#" class="delete" data-name="{{ $list->id }}" data-url="{{ url('admin/oauth/client/delete') }}" data-id="{{ $list->id }}" data-toggle="modal" data-target="#doDelete">{{ trans('common.delete') }}</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -60,7 +60,7 @@
                         <ul class="pagination pagination-sm no-margin pull-left">
                             <li><a href="#"> {{ $lists->currentPage() }} / {{ $lists->lastPage() ?: 1 }}</a></li>
                         </ul>
-                        @if ($lists->lastPage() != 1)
+                        @if ($lists->lastPage() > 1)
                         <ul class="pagination pagination-sm no-margin pull-right">
                             <li><a href="{{ $lists->url(1) }}">{{ trans('common.page.first') }}</a></li>
                             <li><a href="{{ $lists->previousPageUrl() }}">{{ trans('common.page.prev') }}</a></li>

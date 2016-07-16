@@ -39,7 +39,7 @@ class BaseController extends Controller
     protected function getBaseItem($name, $id, $view = null)
     {
         $model = $this->getModel($name);
-        $item = $model->find(intval($id));
+        $item = $model->find($id);
         if (!$item) {
             throw new NotFoundHttpException;
         }

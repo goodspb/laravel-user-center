@@ -37,7 +37,7 @@
                         <label for="oauth_client_id" class="col-sm-2 control-label">{{ trans('common.oauth_client_id') }}</label>
                         <div class="col-sm-10">
                             @if (isset($item))
-                            <input type="text" class="form-control" id="oauth_client_id" value="{{ $item->id }}" readonly>
+                                <input type="text" class="form-control" id="oauth_client_id" value="{{ $item->id }}" readonly>
                             @else
                                 <input type="text" class="form-control" id="oauth_client_id" name="oauth_client_id" value="{{ old('oauth_client_id') }}" >
                             @endif
@@ -46,11 +46,7 @@
                     <div class="form-group">
                         <label for="oauth_client_secret" class="col-sm-2 control-label">{{ trans('common.oauth_client_secret') }}</label>
                         <div class="col-sm-10">
-                            @if (isset($item))
-                                <input type="text" class="form-control" id="oauth_client_secret" value="{{ $item->secret }}">
-                            @else
-                                <input type="text" class="form-control" id="oauth_client_secret" name="oauth_client_secret" value="{{ old('oauth_client_secret') }}" >
-                            @endif
+                            <input type="text" class="form-control" id="oauth_client_secret" name="oauth_client_secret" value="{{ isset($item) ? $item->secret : old('oauth_client_secret') }}" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -72,11 +68,34 @@
                         <div class="col-sm-10">
                             <select name="oauth_client_scope[]" id="oauth_client_scope" class="form-control" multiple="multiple">
                                 @foreach($scopes as $scope)
-                                    <option value="{{ $scope->id }}">{{ $scope->id }}</option>
+                                    <option @if(isset($item))
+                                                @foreach($item->scopes as $uScope)
+                                                    @if($uScope->id == $scope->id) selected @endif
+                                                @endforeach
+                                            @else
+                                                @if ($oldScope = old('oauth_client_scope'))
+                                                    @foreach($oldScope as $oScope)
+                                                         @if($oScope == $scope->id) selected @endif
+                                                    @endforeach
+                                                @endif
+                                            @endif
+                                    value="{{ $scope->id }}">{{ $scope->id }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+                    {{--
+                    <div class="form-group">
+                        <label for="oauth_client_grant" class="col-sm-2 control-label">{{ trans('common.oauth_client_grant') }}</label>
+                        <div class="col-sm-10">
+                            <select name="oauth_client_grant[]" id="oauth_client_grant" class="form-control" multiple="multiple">
+                                @foreach($grants as $grant)
+                                    <option @if(isset($item)) @foreach($item->grants as $uGrant) @if($uGrant->id == $grant->id) selected @endif @endforeach @endif value="{{ $grant->id }}">{{ $grant->id }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    --}}
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
@@ -103,7 +122,11 @@
 <script>
     $(function(){
         $("#oauth_client_scope").select2({
-            placeholder: "{{ trans('common.role_select') }}",
+            placeholder: "{{ trans('common.oauth_client_scope_select') }}",
+            language: "zh-CN"
+        });
+        $('#oauth_client_grant').select2({
+            placeholder: "{{ trans('common.oauth_client_grant_select') }}",
             language: "zh-CN"
         });
     });

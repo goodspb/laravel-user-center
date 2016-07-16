@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title') {{ trans('admin.menu_list.'.$type) }} @endsection
+@section('title') {{ trans('admin.menu_list.oauth') }} @endsection
 
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            {{ trans('admin.menu_list.'.$type) }}
+            {{ trans('admin.menu_list.oauth_grant') }}
             <small>{{ trans('page.total', ['total'=> $total = $lists->total()]) }}</small>
         </h1>
     </section>
@@ -18,41 +18,32 @@
 
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{ trans('admin.menu_list.'.$type.'_list') }}</h3>
-                        <span class="pull-right"><button type="button" onclick="location='{{ url('admin/'.$type.'/add') }}';" class="btn btn-success pull-right">{{ trans('common.add') }}</button></span>
+                        <h3 class="box-title">
+                            {{ trans('admin.menu_list.oauth_grant_list') }}
+                        </h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tr>
                                 <th class="visible-lg">#</th>
-                                <th>{{ trans('admin.'.$type.'.name') }}</th>
-                                <th>{{ trans('admin.'.$type.'.display_name') }}</th>
-                                <th>{{ trans('admin.'.$type.'.description') }}</th>
+                                <th>{{ trans('common.oauth_grant_id') }}</th>
                                 <th>{{ trans('admin.created_at') }}</th>
                                 <th>{{ trans('admin.updated_at') }}</th>
-                                <th>#</th>
                             </tr>
                             @if ($lists->total() > 0)
-                                @foreach($lists as $list)
+                                @foreach($lists as $key => $list)
                                 <tr>
+                                    <td>{{ $key+1 }}</td>
                                     <td>{{ $list->id }}</td>
-                                    <td>{{ $list->name }}</td>
-                                    <td>{{ $list->display_name }}</td>
-                                    <td>{{ str_limit($list->description, 30) }}</td>
                                     <td>{{ $list->created_at }}</td>
                                     <td>{{ $list->updated_at }}</td>
-                                    <td>
-                                        @if ($type == 'role')
-                                            <a href="{{ url('admin/role/permission', ['id' => $list->id]) }}">{{ trans('admin.menu_list.permission_role') }}</a>
-                                        @endif
-                                        <a href="{{ url('admin/'.$type.'/edit', ['id' => $list->id]) }}">{{ trans('common.manage') }}</a>
-                                        <a href="#" class="delete" data-name="{{ $list->name }}" data-url="{{ url('admin/'.$type.'/delete') }}" data-id="{{ $list->id }}" data-toggle="modal" data-target="#doDelete">{{ trans('common.delete') }}</a>
-                                    </td>
                                 </tr>
                                 @endforeach
                             @else
-                                <tr><td style="text-align: center;" colspan="7">{{ trans('common.empty') }}</td></tr>
+                                <tr>
+                                    <td colspan="4" style="text-align: center">{{ trans('common.empty') }}</td>
+                                </tr>
                             @endif
                         </table>
                     </div>

@@ -47,6 +47,12 @@ return [
     'oauth_client_name' => '客户端名称',
     'oauth_client_redirect_uri' => '回调地址',
     'oauth_client_scope' => '权限范围',
+    'oauth_client_grant' => '授权方式',
+    'oauth_scope_id' => '权限标识',
+    'oauth_scope_description' => '权限描述',
+    'oauth_client_scope_select' => '请选择权限标识',
+    'oauth_grant_id' => '授权方式标识',
+    'oauth_client_grant_select' => '请选择授权方式',
 
     'upload' => [
         'empty' => '文件未空',

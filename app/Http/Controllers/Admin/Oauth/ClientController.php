@@ -2,11 +2,19 @@
 namespace App\Http\Controllers\Admin\Oauth;
 
 use App\Http\Controllers\Admin\BaseController;
+use App\Models\OauthClient;
+use App\Models\OauthGrant;
 use App\Models\OauthScope;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class ClientController extends BaseController
 {
+
+    public function getIndex()
+    {
+        return redirect('admin/oauth/client/list');
+    }
 
     public function getList()
     {
@@ -16,6 +24,7 @@ class ClientController extends BaseController
     public function getAdd()
     {
         $this->getAllScopes();
+        $this->getAllGrant();
         return view('admin.oauth.client.item');
     }
 
@@ -23,19 +32,45 @@ class ClientController extends BaseController
     {
         $this->validate($request, [
             'oauth_client_id' => 'required|max:40',
-            'oauth_client_secret' => 'required|max:40',
-            'oauth_client_name' => 'required|max:255',
-            'oauth_client_redirect_uri' => 'required|url',
-            'oauth_client_scope' => 'required|array'
         ]);
-        $oauthClient = $this->getBaseItem('oauthClient');
-        
+        $oauthClient = new OauthClient();
+        $oauthClient->id = Input::get('oauth_client_id');
+        return $this->saveClient($oauthClient, $request);
     }
 
     public function getEdit($id)
     {
         $this->getAllScopes();
+        $this->getAllGrant();
         return $this->getBaseItem('oauthClient', $id, 'admin.oauth.client.item');
+    }
+
+    public function postEdit(Request $request)
+    {
+        $oauthClient = $this->getBaseItem('oauthClient', Input::get('id'));
+        return $this->saveClient($oauthClient, $request);
+    }
+
+    protected function saveClient($client, Request $request)
+    {
+        $this->validate($request, [
+            'oauth_client_secret' => 'required|max:40',
+            'oauth_client_name' => 'required|max:255',
+            'oauth_client_redirect_uri' => 'required|url',
+            'oauth_client_scope' => 'required|array',
+            'oauth_client_grant' => 'array',
+        ]);
+        /** @var OauthClient $client */
+        $client->secret = Input::get('oauth_client_secret');
+        $client->name = Input::get('oauth_client_name');
+        $type = $client->isNew() ? 'add' : 'edit';
+        if ($client->save()) {
+            $client->saveEndpoint(Input::get('oauth_client_redirect_uri'));
+            $client->saveScope(Input::get('oauth_client_scope'));
+            $client->saveGrant(Input::get('oauth_client_grant'));
+            return redirect()->back()->with('success', trans("common.{$type}_success"));
+        }
+        return redirect()->back()->withErrors(['error' => trans("common.{$type}_fail")]);
     }
 
     protected function getAllScopes()
@@ -43,6 +78,18 @@ class ClientController extends BaseController
         $scopes = OauthScope::all();
         view()->share('scopes', $scopes);
         return $scopes;
+    }
+
+    protected function getAllGrant()
+    {
+        $grants = OauthGrant::all();
+        view()->share('grants', $grants);
+        return $grants;
+    }
+
+    public function postDelete()
+    {
+        return $this->doDelete('OauthClient');
     }
 
 }
