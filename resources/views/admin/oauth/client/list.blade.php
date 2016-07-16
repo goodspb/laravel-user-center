@@ -29,6 +29,8 @@
                                 <th>{{ trans('common.oauth_client_name') }}</th>
                                 <th>{{ trans('common.oauth_client_id') }}</th>
                                 <th>{{ trans('common.oauth_client_secret') }}</th>
+                                <th>{{ trans('common.oauth_client_redirect_uri') }}</th>
+                                <th>{{ trans('common.oauth_client_scope') }}</th>
                                 <th>{{ trans('admin.created_at') }}</th>
                                 <th>{{ trans('admin.updated_at') }}</th>
                                 <th>#</th>
@@ -40,6 +42,13 @@
                                     <td>{{ $list->name }}</td>
                                     <td>{{ $list->id }}</td>
                                     <td>{{ $list->secret }}</td>
+                                    <td>{{ $list->endpoint->redirect_uri }}</td>
+                                    <td>
+                                        @foreach($list->scopes as $sKey => $scope)
+                                            @if ($sKey > 0) , @endif
+                                            {{ $scope->id }}
+                                        @endforeach
+                                    </td>
                                     <td>{{ $list->created_at }}</td>
                                     <td>{{ $list->updated_at }}</td>
                                     <td>
@@ -50,7 +59,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="7" style="text-align: center">{{ trans('common.empty') }}</td>
+                                    <td colspan="9" style="text-align: center">{{ trans('common.empty') }}</td>
                                 </tr>
                             @endif
                         </table>
