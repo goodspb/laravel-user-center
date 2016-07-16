@@ -185,7 +185,8 @@
                 }
             }
         });
-        $("#role-select").select2({
+
+        $('select').select2({
             placeholder: "{{ trans('common.role_select') }}",
             language: "zh-CN"
         });
