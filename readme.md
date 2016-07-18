@@ -10,9 +10,10 @@
 2. 修改根目录下 .env 文件 , CACHE_DRIVER 请使用 redis / memcached , file 模式不被支持
 3. 执行 `php artisan key:generate` , 生成随机 key
 4. 执行 `php artisan migrate --seed` , 导入表结构和数据内容
-5. 配置 nginx , 指向目录 `public`
-6. 设置 `storage` 和 `bootstrap/cache` 和 `public/upload` 可写权限 
-7. 完事大吉
+5. 执行 `php artisan ide-helper:generate` , 生成 _ide-helper.php
+6. 配置 nginx , 指向目录 `public`
+7. 设置 `storage` 和 `bootstrap/cache` 和 `public/upload` 可写权限 
+8. 完事大吉
 
 ### 开发
 
