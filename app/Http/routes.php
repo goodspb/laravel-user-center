@@ -15,11 +15,13 @@ Route::get('/', function () {
     return redirect('admin');
 });
 
+/* 登录管理 */
 Route::group(['prefix' => '/auth', 'namespace' => 'Auth', 'middleware' => 'csrf'], function () {
     Route::controller('/forgot', 'PasswordController');
     Route::controller('/', 'AuthController');
 });
 
+/* 后台管理 */
 Route::group(['prefix' => '/admin' , 'namespace' => 'Admin' , 'middleware' => ['auth', 'role:admin', 'csrf']] , function () {
     Route::group(['prefix' => '/oauth', 'namespace' => 'Oauth' ], function() {
         Route::controller('/grant', 'GrantController');
@@ -30,4 +32,8 @@ Route::group(['prefix' => '/admin' , 'namespace' => 'Admin' , 'middleware' => ['
     Route::controller('/role', 'RoleController');
     Route::controller('/user', 'UserController');
     Route::controller('/', 'IndexController');
+});
+
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
 });
