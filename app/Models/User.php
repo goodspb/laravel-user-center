@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Library\Avatar;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -32,6 +33,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * User information
+     * @var array
+     */
+    protected $userInfo;
 
     /**
      * Return user profile
@@ -75,5 +82,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $result;
     }
 
+    public function getInfo()
+    {
+        if ($this->userInfo != null) {
+            return $this->userInfo;
+        }
+        $this->userInfo = $this->getArrayableAttributes();
+        $this->userInfo['nickname'] = $this->profile->nickname;
+        $this->userInfo['avatar'] = url(Avatar::getAvatar($this->profile->avatar));
+        $this->userInfo['sex'] = $this->profile->sex;
+        $this->userInfo['province'] = $this->profile->province;
+        $this->userInfo['city'] = $this->profile->city;
+        $this->userInfo['area'] = $this->profile->area;
+        $this->userInfo['description'] = $this->profile->description;
+        return $this->userInfo;
+    }
 
 }

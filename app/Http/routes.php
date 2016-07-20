@@ -34,7 +34,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => ['au
     Route::controller('/', 'IndexController');
 });
 
-/* Oauth api */
+/* Oauth Authorizer */
 Route::group(['prefix' => '/oauth'], function () {
     Route::post('/access_token', function () {
         return Response::json(Authorizer::issueAccessToken());
@@ -49,4 +49,11 @@ Route::group(['prefix' => '/oauth'], function () {
         'middleware' => ['csrf', 'check-authorization-params', 'auth'],
         'uses' => 'Api\OauthController@postAuthorize',
     ]);
+});
+
+/* Api 接口路由 */
+Route::group(['prefix' => '/api', 'namespace' => 'Api' , 'middleware' => ['oauth']], function() {
+    Route::group(['prefix'=> '/user'], function() {
+        Route::get('/userinfo', 'UserController@getUserInfo');
+    });
 });
