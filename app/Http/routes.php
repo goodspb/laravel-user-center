@@ -22,8 +22,8 @@ Route::group(['prefix' => '/auth', 'namespace' => 'Auth', 'middleware' => 'csrf'
 });
 
 /* 后台管理 */
-Route::group(['prefix' => '/admin' , 'namespace' => 'Admin' , 'middleware' => ['auth', 'role:admin', 'csrf']] , function () {
-    Route::group(['prefix' => '/oauth', 'namespace' => 'Oauth' ], function() {
+Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'role:admin', 'csrf']], function () {
+    Route::group(['prefix' => '/oauth', 'namespace' => 'Oauth'], function () {
         Route::controller('/grant', 'GrantController');
         Route::controller('/client', 'ClientController');
         Route::controller('/scope', 'ScopeController');
@@ -34,6 +34,19 @@ Route::group(['prefix' => '/admin' , 'namespace' => 'Admin' , 'middleware' => ['
     Route::controller('/', 'IndexController');
 });
 
-Route::post('oauth/access_token', function() {
-    return Response::json(Authorizer::issueAccessToken());
+/* Oauth api */
+Route::group(['prefix' => '/oauth'], function () {
+    Route::post('/access_token', function () {
+        return Response::json(Authorizer::issueAccessToken());
+    });
+    Route::get('/authorize', [
+        'as' => 'oauth.authorize.get',
+        'middleware' => ['check-authorization-params', 'auth'],
+        'uses' => 'Api/OauthController@getAuthorize',
+    ]);
+    Route::post('oauth/authorize', [
+        'as' => 'oauth.authorize.post',
+        'middleware' => ['csrf', 'check-authorization-params', 'auth'],
+        'uses' => 'Api/OauthController@postAuthorize',
+    ]);
 });
