@@ -42,6 +42,10 @@
         <td>NO</td>
     </tr>
     <tr>
+        <td>加入单元测试</td>
+        <td>NO</td>
+    </tr>
+    <tr>
         <td>加入第三方登录</td>
         <td>NO</td>
     </tr>
