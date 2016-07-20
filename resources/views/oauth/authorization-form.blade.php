@@ -12,7 +12,7 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
 
-            <h2>{{$client->getName()}}</h2>
+            <h3>{{ trans('oauth.authorize-description', ['client' => $client->getName()]) }}</h3>
             <form method="post" action="{{route('oauth.authorize.post', $params)}}">
                 {{ csrf_field() }}
                 <input type="hidden" name="client_id" value="{{$params['client_id']}}">

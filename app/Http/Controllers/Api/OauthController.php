@@ -1,13 +1,14 @@
 <?php
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Authorizer;
 use View;
 use Auth;
 use Request;
 use Redirect;
 
-class OauthController extends BaseController
+class OauthController extends Controller
 {
     public function getAuthorize()
     {

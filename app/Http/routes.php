@@ -42,11 +42,11 @@ Route::group(['prefix' => '/oauth'], function () {
     Route::get('/authorize', [
         'as' => 'oauth.authorize.get',
         'middleware' => ['check-authorization-params', 'auth'],
-        'uses' => 'Api/OauthController@getAuthorize',
+        'uses' => 'Api\OauthController@getAuthorize',
     ]);
     Route::post('oauth/authorize', [
         'as' => 'oauth.authorize.post',
         'middleware' => ['csrf', 'check-authorization-params', 'auth'],
-        'uses' => 'Api/OauthController@postAuthorize',
+        'uses' => 'Api\OauthController@postAuthorize',
     ]);
 });
