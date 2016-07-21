@@ -53,7 +53,7 @@ Route::group(['prefix' => '/oauth'], function () {
 
 /* Api 接口路由 */
 Route::group(['prefix' => '/api', 'namespace' => 'Api' , 'middleware' => ['oauth']], function() {
-    Route::group(['prefix'=> '/user'], function() {
-        Route::get('/userinfo', 'UserController@getUserInfo');
-    });
+    Route::resource('/profile', 'Resource\ProfileController');
+    Route::resource('/mobile', 'Resource\MobileController');
+    Route::resource('/password', 'Resource\PasswordController');
 });

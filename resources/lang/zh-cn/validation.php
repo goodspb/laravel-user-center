@@ -124,6 +124,7 @@ return [
         'oauth_client_scope' => trans('common.oauth_client_scope'),
         'oauth_client_grant' => trans('common.oauth_client_grant'),
         'oauth_client_redirect_uri' => trans('common.oauth_client_redirect_uri'),
+        'original_password' => trans('auth.original_password'),
     ],
 
 ];
