@@ -11,14 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('admin');
-});
+/* 首页 */
+Route::get('/', [
+    'middleware' => ['auth'],
+    'uses' => function () {
+        if (Auth::user() && Auth::user()->hasRole('admin')) {
+            return redirect('/admin');
+        }
+        return redirect('/user');
+    },
+]);
 
 /* 登录管理 */
 Route::group(['prefix' => '/auth', 'namespace' => 'Auth', 'middleware' => 'csrf'], function () {
     Route::controller('/forgot', 'PasswordController');
     Route::controller('/', 'AuthController');
+});
+
+/* 前台用户页面 */
+Route::group(['prefix' => '/user', 'namespace' => 'Front', 'middleware' => ['auth', 'csrf']], function() {
+    Route::controller('/', 'UserController');
 });
 
 /* 后台管理 */
