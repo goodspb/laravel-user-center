@@ -1,8 +1,14 @@
 # LaravelUserCenter
 
-> Laravel 5.1 + AdminLTE2 + User Management Functions = LaravelUserCenter
+> Laravel 5.1 + AdminLTE2 + Oauth2.0 + User Management Functions = LaravelUserCenter
 
 > 感谢 Laravel & AdminLTE , 让开发变得这么简单, :-D
+
+### 使用方向
+
+    问: 什么情况可以使用本项目来做开发的基础
+    答: 用户中心。公司有多个项目, 但是只需要统一的用户数据。 例如: 商城、App、论坛、网页都用同一套用户体系
+
 
 ### 安装
 
@@ -12,16 +18,22 @@
 4. 执行 `php artisan migrate --seed` , 导入表结构和数据内容
 5. 执行 `php artisan ide-helper:generate` , 生成 _ide-helper.php
 6. 配置 nginx , 指向目录 `public`
-7. 设置 `storage` 和 `bootstrap/cache` 和 `public/upload` 可写权限 
+7. 设置 `storage` 和 `bootstrap/cache` 和 `public/upload` 可写权限
 8. 完事大吉
 
 ### 开发
 
 > 若需要开发, 请留意以下知识点 :
 
-1. Laravel 5.1 
+1. Laravel 5.1
 2. AdminLTE2 模板
-3. 权限包 Entrust , [文档](https://github.com/Zizaco/entrust) 
+3. 权限包 Entrust , [文档](https://github.com/Zizaco/entrust)
+4. Oauth2.0 的原理和规范, 请查看 [阮一峰老师的博文](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)
+5. oauth2-server-laravel包, [文档](https://github.com/lucadegasperi/oauth2-server-laravel/tree/master/docs#readme)
+
+### 现在的 Oauth 接口说明
+
+直接查看本项目的 [wiki](https://github.com/goodspb/laravel-user-center)
 
 ### Todo List
 
@@ -39,6 +51,10 @@
     </tr>
     <tr>
         <td>加入 Oauth2.0 接口, 完善 用户中心 概念</td>
+        <td>YES</td>
+    </tr>
+    <tr>
+        <td>加入号码短讯手机验证</td>
         <td>NO</td>
     </tr>
     <tr>
@@ -51,6 +67,4 @@
     </tr>
 </tbody>
 </table>
-
-### 截图
 
