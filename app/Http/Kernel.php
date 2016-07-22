@@ -17,7 +17,7 @@ class Kernel extends HttpKernel
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \App\Http\Middleware\VerifyCsrfToken::class,
+        \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
     ];
 
     /**
@@ -32,5 +32,11 @@ class Kernel extends HttpKernel
         'role'          => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission'    => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability'       => \Zizaco\Entrust\Middleware\EntrustAbility::class,
+        'csrf'          => \App\Http\Middleware\VerifyCsrfToken::class,
+        /* oauth */
+        'oauth'         => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,               //grant_type = all
+        'oauth-user'    => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,      //grant_type = password
+        'oauth-client'  => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,    //grant_type = client_credentials
+        'check-authorization-params' => \LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware::class,
     ];
 }

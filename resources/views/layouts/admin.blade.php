@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+    @yield('css')
     <!-- Load google font-->
     <link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"  media="none" onload="if(media!='all')media='all'">
     <!-- Theme style -->
@@ -22,7 +23,6 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ $cdnUrl }}assets/css/skins/_all-skins.min.css">
-    @yield('css')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -32,14 +32,14 @@
 </head>
 <body class="@yield('body-class', 'sidebar-mini skin-black-light wysihtml5-supported')">
 <div class="wrapper">
-    @include('admin.header')
+    @include('public.header')
     @include('admin.menu')
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             @yield('content')
         </div>
         <!-- /.content-wrapper -->
-    @include('admin.footer')
+    @include('public.footer')
 </div>
 <!-- js -->
 <script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>

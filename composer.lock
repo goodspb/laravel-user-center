@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7ceb56bee07d3d57a98cc6e92a539838",
-    "content-hash": "24014f9ff007b940d9bcf16b28a0ef0d",
+    "hash": "abfab4ce73a363c074b67ff846908b2e",
+    "content-hash": "e3eebc2a390d79adc00a7d23b8062f35",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -612,6 +612,56 @@
             "time": "2016-06-17 19:23:17"
         },
         {
+            "name": "league/event",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/event.git",
+                "reference": "e4bfc88dbcb60c8d8a2939a71f9813e141bbe4cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/thephpleague/event/e4bfc88dbcb60c8d8a2939a71f9813e141bbe4cd.zip",
+                "reference": "e4bfc88dbcb60c8d8a2939a71f9813e141bbe4cd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "henrikbjorn/phpspec-code-coverage": "~1.0.1",
+                "phpspec/phpspec": "~2.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Event\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
+                }
+            ],
+            "description": "Event package",
+            "keywords": [
+                "emitter",
+                "event",
+                "listener"
+            ],
+            "time": "2015-05-21 12:24:47"
+        },
+        {
             "name": "league/flysystem",
             "version": "1.0.24",
             "source": {
@@ -693,6 +743,137 @@
                 "storage"
             ],
             "time": "2016-06-03 19:11:39"
+        },
+        {
+            "name": "league/oauth2-server",
+            "version": "4.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/oauth2-server.git",
+                "reference": "c5db707e694963f0ac86f1c3d7eb3b25c205ed17"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/thephpleague/oauth2-server/c5db707e694963f0ac86f1c3d7eb3b25c205ed17.zip",
+                "reference": "c5db707e694963f0ac86f1c3d7eb3b25c205ed17",
+                "shasum": ""
+            },
+            "require": {
+                "league/event": "~2.1",
+                "php": ">=5.4.0",
+                "symfony/http-foundation": "~2.4|~3.0"
+            },
+            "replace": {
+                "league/oauth2server": "*",
+                "lncd/oauth2": "*"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "4.3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\OAuth2\\Server\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Bilbie",
+                    "email": "hello@alexbilbie.com",
+                    "homepage": "http://www.alexbilbie.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A lightweight and powerful OAuth 2.0 authorization and resource server library with support for all the core specification grants. This library will allow you to secure your API with OAuth and allow your applications users to approve apps that want to access their data from your API.",
+            "homepage": "http://oauth2.thephpleague.com/",
+            "keywords": [
+                "Authentication",
+                "api",
+                "auth",
+                "authorisation",
+                "authorization",
+                "oauth",
+                "oauth 2",
+                "oauth 2.0",
+                "oauth2",
+                "protect",
+                "resource",
+                "secure",
+                "server"
+            ],
+            "time": "2016-01-04 19:56:12"
+        },
+        {
+            "name": "lucadegasperi/oauth2-server-laravel",
+            "version": "5.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lucadegasperi/oauth2-server-laravel.git",
+                "reference": "8378a97f65e75ab01568c94db133fcbc2960d23b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/lucadegasperi/oauth2-server-laravel/8378a97f65e75ab01568c94db133fcbc2960d23b.zip",
+                "reference": "8378a97f65e75ab01568c94db133fcbc2960d23b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "5.1.*",
+                "illuminate/console": "5.1.*",
+                "illuminate/contracts": "5.1.*",
+                "illuminate/database": "5.1.*",
+                "illuminate/http": "5.1.*",
+                "illuminate/support": "5.1.*",
+                "league/oauth2-server": "4.1.*",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "henrikbjorn/phpspec-code-coverage": "^1.0",
+                "mockery/mockery": "^0.9.4",
+                "orchestra/testbench": "3.1.*",
+                "phpspec/phpspec": "^2.2",
+                "phpunit/phpunit": "^4.8 || ^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LucaDegasperi\\OAuth2Server\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luca Degasperi",
+                    "email": "packages@lucadegasperi.com"
+                },
+                {
+                    "name": "Vincent Klaiber",
+                    "email": "hello@vinkla.com"
+                }
+            ],
+            "description": "An OAuth 2.0 bridge for Laravel and Lumen",
+            "keywords": [
+                "api",
+                "laravel",
+                "lumen",
+                "oauth",
+                "oauth2",
+                "server"
+            ],
+            "time": "2015-11-02 12:24:52"
         },
         {
             "name": "monolog/monolog",

@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Library\Avatar;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -34,22 +35,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     /**
+     * User information
+     * @var array
+     */
+    protected $userInfo;
+
+    /**
      * Return user profile
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function profile()
     {
         return $this->hasOne('App\Models\UserProfile', 'user_id', 'id');
-    }
-
-    public function save(array $options = [], $saveProfile = true)
-    {
-        //生成用户资料如果不存在
-        $result = parent::save($options);
-        if ($result && (!$this->profile) && $saveProfile) {
-            $this->saveProfile();
-        }
-        return $result;
     }
 
     public function saveProfile($data = [])
@@ -70,13 +67,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->profile()->save($profile);
     }
 
-    public function saveRoles($data, $save = false)
+    public function saveRoles($data)
     {
         $this->detachRoles();
         if (!empty($data)) {
             $this->attachRoles($data);
         }
-        $save and $this->save();
     }
 
     public function delete()
@@ -86,5 +82,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $result;
     }
 
+    public function getInfo()
+    {
+        if ($this->userInfo != null) {
+            return $this->userInfo;
+        }
+        $this->userInfo = $this->getArrayableAttributes();
+        $this->userInfo['nickname'] = $this->profile->nickname;
+        $this->userInfo['avatar'] = url(Avatar::getAvatar($this->profile->avatar));
+        $this->userInfo['sex'] = $this->profile->sex;
+        $this->userInfo['province'] = $this->profile->province;
+        $this->userInfo['city'] = $this->profile->city;
+        $this->userInfo['area'] = $this->profile->area;
+        $this->userInfo['description'] = $this->profile->description;
+        return $this->userInfo;
+    }
 
 }

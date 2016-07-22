@@ -171,6 +171,7 @@
 @section('js')
 <script type="text/javascript" src="{{ Config::get('app.cdn_url') }}plugins/AjaxFileUpload/jquery.ajaxfileupload.js"></script>
 <script src="{{ Config::get('app.cdn_url') }}plugins/select2/select2.full.min.js"></script>
+<script src="{{ Config::get('app.cdn_url') }}plugins/select2/i18n/zh-CN.js"></script>
 <script>
     $(function(){
         $('#avatar').AjaxFileUpload({
@@ -184,8 +185,10 @@
                 }
             }
         });
-        $("#role-select").select2({
-            placeholder: "{{ trans('common.role_select') }}"
+
+        $('select').select2({
+            placeholder: "{{ trans('common.role_select') }}",
+            language: "zh-CN"
         });
 
         $('#province').change(function(){
@@ -213,13 +216,14 @@
     function getRegion(_nextId, _pid, _type, _defalutId) {
         var $region = $('#'+_nextId);
         $region.html('<option value="0" selected>{{ trans('common.select') }}</option>');
-        $.get('/admin/user/region?type='+_type+'&pid='+_pid,function(data){
+        $.get('/user/region?type='+_type+'&pid='+_pid,function(data){
             if (data.status == 0) {
                 var _list = data.list;
                 if ($(_list).first().length != 0) {
                     $region.show();
                     $.each(_list, function(i,val){
                         $region.append('<option '+( val.id == _defalutId ? 'selected' : '' )+' value="'+val.id+'">'+val.name+'</option>');
+                        $region.trigger('change.select2');
                     });
                 } else {
                     $region.hide();

@@ -10,7 +10,8 @@
         "pda/pheanstalk": "^3.1",
         "predis/predis" : "1.0.3",
         "zizaco/entrust": "5.2.x-dev",
-        "intervention/image": "2.3.7"
+        "intervention/image": "2.3.7",
+        "lucadegasperi/oauth2-server-laravel": "5.0.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

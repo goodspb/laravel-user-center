@@ -21,6 +21,7 @@ return [
     'email' => '邮箱地址',
     'password' => '密码',
     'repeat-password' => '重复密码',
+    'original_password' => '原密码',
     'reset' => '重置密码',
     'name' => '用户名',
 

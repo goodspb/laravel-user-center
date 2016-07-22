@@ -11,18 +11,61 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('admin');
-});
+/* 首页 */
+Route::get('/', [
+    'middleware' => ['auth'],
+    'uses' => function () {
+        if (Auth::user() && Auth::user()->hasRole('admin')) {
+            return redirect('/admin');
+        }
+        return redirect('/user');
+    },
+]);
 
-Route::group(['prefix' => '/auth', 'namespace' => 'Auth'], function () {
+/* 登录管理 */
+Route::group(['prefix' => '/auth', 'namespace' => 'Auth', 'middleware' => 'csrf'], function () {
     Route::controller('/forgot', 'PasswordController');
     Route::controller('/', 'AuthController');
 });
 
-Route::group(['prefix' => '/admin' , 'namespace' => 'Admin' , 'middleware' => ['auth', 'role:admin']] , function () {
+/* 前台用户页面 */
+Route::group(['prefix' => '/user', 'namespace' => 'Front', 'middleware' => ['auth', 'csrf']], function() {
+    Route::controller('/', 'UserController');
+});
+
+/* 后台管理 */
+Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'role:admin', 'csrf']], function () {
+    Route::group(['prefix' => '/oauth', 'namespace' => 'Oauth'], function () {
+        Route::controller('/grant', 'GrantController');
+        Route::controller('/client', 'ClientController');
+        Route::controller('/scope', 'ScopeController');
+    });
     Route::controller('/permission', 'PermissionController');
     Route::controller('/role', 'RoleController');
     Route::controller('/user', 'UserController');
     Route::controller('/', 'IndexController');
+});
+
+/* Oauth Authorizer */
+Route::group(['prefix' => '/oauth'], function () {
+    Route::post('/access_token', function () {
+        return Response::json(Authorizer::issueAccessToken());
+    });
+    Route::get('/authorize', [
+        'as' => 'oauth.authorize.get',
+        'middleware' => ['check-authorization-params', 'auth'],
+        'uses' => 'Api\OauthController@getAuthorize',
+    ]);
+    Route::post('oauth/authorize', [
+        'as' => 'oauth.authorize.post',
+        'middleware' => ['csrf', 'check-authorization-params', 'auth'],
+        'uses' => 'Api\OauthController@postAuthorize',
+    ]);
+});
+
+/* Api 接口路由 */
+Route::group(['prefix' => '/api', 'namespace' => 'Api' , 'middleware' => ['oauth']], function() {
+    Route::resource('/profile', 'Resource\ProfileController');
+    Route::resource('/mobile', 'Resource\MobileController');
+    Route::resource('/password', 'Resource\PasswordController');
 });

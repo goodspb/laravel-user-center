@@ -119,6 +119,12 @@ return [
         'permission_display_name' => trans('admin.permission.display_name'),
         'permission_description' => trans('admin.permission.description'),
         'permission_name' => trans('admin.permission.name'),
+        'oauth_scope_description' => trans('common.oauth_scope_description'),
+        'oauth_scope_id' => trans('common.oauth_scope_id'),
+        'oauth_client_scope' => trans('common.oauth_client_scope'),
+        'oauth_client_grant' => trans('common.oauth_client_grant'),
+        'oauth_client_redirect_uri' => trans('common.oauth_client_redirect_uri'),
+        'original_password' => trans('auth.original_password'),
     ],
 
 ];
