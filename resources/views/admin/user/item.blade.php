@@ -216,13 +216,14 @@
     function getRegion(_nextId, _pid, _type, _defalutId) {
         var $region = $('#'+_nextId);
         $region.html('<option value="0" selected>{{ trans('common.select') }}</option>');
-        $.get('/admin/user/region?type='+_type+'&pid='+_pid,function(data){
+        $.get('/user/region?type='+_type+'&pid='+_pid,function(data){
             if (data.status == 0) {
                 var _list = data.list;
                 if ($(_list).first().length != 0) {
                     $region.show();
                     $.each(_list, function(i,val){
                         $region.append('<option '+( val.id == _defalutId ? 'selected' : '' )+' value="'+val.id+'">'+val.name+'</option>');
+                        $region.trigger('change.select2');
                     });
                 } else {
                     $region.hide();

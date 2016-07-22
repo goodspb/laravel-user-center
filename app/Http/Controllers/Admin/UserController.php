@@ -1,14 +1,16 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Region;
+use App\Http\Controllers\Common\AvatarController;
+use App\Http\Controllers\Common\RegionController;
 use App\Models\Role;
-use Input, Response, Exception;
+use Input;
 use Illuminate\Http\Request;
 use App\Models\User;
 
 class UserController extends BaseController
 {
+    use RegionController, AvatarController;
 
     public function getList()
     {
@@ -106,32 +108,4 @@ class UserController extends BaseController
         return $roles;
     }
 
-    public function getRegion()
-    {
-        $type = intval(Input::get('type', 0));
-        $pid = intval(Input::get('pid', 0));
-        if ($pid <= 0) {
-            return Response::json(array(
-                'status' => -1,
-                'error' => 'param pid is not found'
-            ));
-        }
-        return Response::json(array(
-            'status' => 0,
-            'list' => (new Region())->getByPid($pid, $type)
-        ));
-
-    }
-
-    /**
-     * @param int $type 0:省; 1:市; 2:区
-     * @param null $viewKey
-     * @return mixed
-     */
-    protected function getRegionProvinces()
-    {
-        $result = (new Region)->getProvinces();
-        view()->share('provinces', $result);
-        return $result;
-    }
 }

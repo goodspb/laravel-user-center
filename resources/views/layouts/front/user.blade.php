@@ -30,23 +30,30 @@
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="@yield('body-class', 'sidebar-mini skin-black-light wysihtml5-supported')">
+<!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT -->
+<body class="layout-boxed sidebar-mini skin-black-light">
+<!-- Site wrapper -->
 <div class="wrapper">
+
     @include('public.header')
-    @include('admin.menu')
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            @yield('content')
-        </div>
-        <!-- /.content-wrapper -->
+    @include('front.user.menu')
+    <div class="content-wrapper">
+        @yield('content')
+    </div>
+
     @include('public.footer')
+
 </div>
-<!-- js -->
+<!-- ./wrapper -->
+
 <script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="{{ $cdnUrl }}assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="{{ $cdnUrl }}assets/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
 <script src="{{ $cdnUrl }}assets/js/app.min.js"></script>
-<script src="{{ $cdnUrl }}assets/js/common.js"></script>
 @yield('js')
-@include('public.modal')
 </body>
 </html>

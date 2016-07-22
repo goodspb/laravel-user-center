@@ -31,7 +31,7 @@
                         </li>
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ url('/admin/profile') }}" class="btn btn-default btn-flat">{{ trans('admin.profile') }}</a>
+                                <a href="{{ url('/user/profile') }}" class="btn btn-default btn-flat">{{ trans('admin.profile') }}</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ url('/auth/logout') }}" class="btn btn-default btn-flat">{{ trans('admin.logout') }}</a>
