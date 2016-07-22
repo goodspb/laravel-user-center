@@ -9,9 +9,8 @@ trait RegionController
 {
 
     /**
-     * @param int $type 0:省; 1:市; 2:区
-     * @param null $viewKey
-     * @return mixed
+     * 返回省份列表
+     * @return array|mixed
      */
     protected function getRegionProvinces()
     {
