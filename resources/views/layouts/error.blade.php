@@ -3,7 +3,7 @@
 <head>
     <title>@yield('title')</title>
 
-    <link href="http://fonts.useso.com/css?family=Lato:100" rel="stylesheet" type="text/css" media="none" onload="if(media!='all')media='all'">
+    <link href="//fonts.gmirror.org/css?family=Lato:100" rel="stylesheet" type="text/css" media="none" onload="if(media!='all')media='all'">
 
     <style>
         html, body {
