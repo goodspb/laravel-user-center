@@ -44,7 +44,6 @@ class UserController extends BaseController
         $user->mobile = Input::get('mobile', '');
         if ($user->save()) {
             $user->saveProfile(Input::all());
-            $user->saveRoles(Input::get('roles'));
             return redirect()->back()->with('success', trans("common.edit_success"));
         }
         return redirect()->back()->withErrors(['error' => trans("common.edit_fail")]);
