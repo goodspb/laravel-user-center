@@ -12,17 +12,17 @@ class RoleController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        view()->share('type', 'role');
+        $this->assign('type', 'role');
     }
 
     public function getList()
     {
-        return $this->getBaseList('role', 'admin.entrust.list');
+        return $this->getBaseList('role', 'entrust.list');
     }
 
     public function getEdit($id)
     {
-        return $this->getBaseItem('role', $id, 'admin.entrust.item');
+        return $this->getBaseItem('role', $id, 'entrust.item');
     }
 
     public function postEdit(Request $request)
@@ -33,7 +33,7 @@ class RoleController extends BaseController
 
     public function getAdd()
     {
-        return view('admin.entrust.item');
+        return $this->render('entrust.item');
     }
 
     public function postAdd(Request $request)
@@ -56,9 +56,9 @@ class RoleController extends BaseController
         $role->description = Input::get('role_description');
         $type = $role->isNew() ? 'add' : 'edit';
         if ($role->save()) {
-            return redirect()->back()->with('success', trans("common.{$type}_success"));
+            return $this->successReturn(trans("common.{$type}_success"));
         }
-        return redirect()->back()->withErrors(['error' => trans("common.{$type}_fail")]);
+        return $this->errorReturn(trans("common.{$type}_fail"));
     }
 
     public function postDelete()
@@ -71,7 +71,7 @@ class RoleController extends BaseController
         /** @var Role $role */
         $role = $this->getBaseItem('role', $id);
         $permissions = Permission::all();
-        return view('admin.role.permission', compact('permissions', 'role'));
+        return $this->render('role.permission', compact('permissions', 'role'));
     }
 
     public function postPermission(Request $request)

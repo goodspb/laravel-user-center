@@ -22,14 +22,14 @@ class UserController extends BaseController
             }
         }
         $users = $users->orderBy('id', 'DESC')->paginate(10);
-        return view('admin.user.list', compact('users'));
+        return $this->render('user.list', compact('users'));
     }
 
     public function getAdd()
     {
         $this->getAllRoles();
         $this->getRegionProvinces();
-        return view('admin.user.item');
+        return $this->render('user.item');
     }
 
     public function postAdd(Request $request)
@@ -49,7 +49,7 @@ class UserController extends BaseController
     {
         $this->getAllRoles();
         $this->getRegionProvinces();
-        return $this->getBaseItem('user', $id, 'admin.user.item');
+        return $this->getBaseItem('user', $id, 'user.item');
     }
 
     public function postEdit(Request $request)
@@ -61,7 +61,7 @@ class UserController extends BaseController
     /**
      * @param User $user
      * @param Request $request
-     * @return $this|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     protected function saveUser($user, Request $request)
     {
@@ -86,9 +86,9 @@ class UserController extends BaseController
         if ($user->save()) {
             $user->saveProfile(Input::all());
             $user->saveRoles(Input::get('roles'));
-            return redirect()->back()->with('success', trans("common.{$type}_success"));
+            return $this->successReturn(trans("common.{$type}_success"));
         }
-        return redirect()->back()->withErrors(['error' => trans("common.{$type}_fail")]);
+        return $this->errorReturn(trans("common.{$type}_fail"));
     }
 
     public function postAvatar($id)
@@ -104,7 +104,7 @@ class UserController extends BaseController
     protected function getAllRoles()
     {
         $roles = Role::all();
-        view()->share('roles', $roles);
+        $this->assign('roles', $roles);
         return $roles;
     }
 

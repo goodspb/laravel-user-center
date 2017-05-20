@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Input, Exception, Response;
+use Input;
 use App\Models\Permission;
 
 class PermissionController extends BaseController
@@ -10,17 +10,17 @@ class PermissionController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        view()->share('type', 'permission');
+        $this->assign('type', 'permission');
     }
 
     public function getList()
     {
-        return $this->getBaseList('permission', 'admin.entrust.list');
+        return $this->getBaseList('permission', 'entrust.list');
     }
 
     public function getEdit($id)
     {
-        return $this->getBaseItem('permission', $id, 'admin.entrust.item');
+        return $this->getBaseItem('permission', $id, 'entrust.item');
     }
 
     public function postEdit(Request $request)
@@ -31,7 +31,7 @@ class PermissionController extends BaseController
 
     public function getAdd()
     {
-        return view('admin.entrust.item');
+        return $this->render('entrust.item');
     }
 
     public function postAdd(Request $request)
@@ -54,9 +54,9 @@ class PermissionController extends BaseController
         $permission->description = Input::get('permission_description');
         $type = $permission->isNew() ? 'add' : 'edit';
         if ($permission->save()) {
-            return redirect()->back()->with('success', trans("common.{$type}_success"));
+            return $this->successReturn(trans("common.{$type}_success"));
         }
-        return redirect()->back()->withErrors(['error' => trans("common.{$type}_fail")]);
+        return $this->errorReturn(trans("common.{$type}_fail"));
     }
 
     public function postDelete()

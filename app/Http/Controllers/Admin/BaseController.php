@@ -15,7 +15,7 @@ class BaseController extends Controller
     {
         $this->authUser  = Auth::user();
         $this->settings = Setting::all();
-        view()->share([
+        $this->assign([
             'auth_user' => $this->authUser,
             'settings' => $this->settings,
         ]);
@@ -33,7 +33,7 @@ class BaseController extends Controller
         $model = $this->getModel($name);
         $orderKey = is_null($orderKey) ? $model->getKeyName() : $orderKey;
         $lists = $model->orderBy($orderKey, $orderSort)->paginate(10);
-        return view($view, ['lists'=> $lists]);
+        return $this->render($view, ['lists'=> $lists]);
     }
 
     /**
@@ -109,4 +109,37 @@ class BaseController extends Controller
         }
         return $redirect->with('success', $msg);
     }
+
+    /**
+     * @param null $view
+     * @param array $data
+     * @param string $prefix
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    protected function render($view = null, $data = [], $prefix = 'admin.')
+    {
+        return view($prefix.$view, $data);
+    }
+
+    /**
+     * @param null $to
+     * @param int $status
+     * @param array $headers
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    protected function redirect($to = null, $status = 302, $headers = [])
+    {
+        return redirect($to, $status, $headers, true);
+    }
+
+    /**
+     * @param $key
+     * @param null $value
+     * @return mixed
+     */
+    protected function assign($key, $value = null)
+    {
+        return view()->share($key, $value);
+    }
+
 }
