@@ -7,6 +7,16 @@
             <li class="active treeview">
                 <a href="#">
                     <i class="fa fa-files-o"></i>
+                    <span>{{ trans('admin.menu_list.site') }}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ url('admin/setting') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.setting') }}</a></li>
+                </ul>
+            </li>
+            <li class="active treeview">
+                <a href="#">
+                    <i class="fa fa-files-o"></i>
                     <span>{{ trans('admin.menu_list.user') }}</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>

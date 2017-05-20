@@ -3,7 +3,7 @@
 @section('title') {{ trans('admin.menu_list.oauth') }} @endsection
 
 @section('css')
-<link rel="stylesheet" href="{{ Config::get('app.cdn_url') }}plugins/select2/select2.min.css">
+<link rel="stylesheet" href="{{ Setting::get('cdn_url', '/') }}plugins/select2/select2.min.css">
 @endsection
 
 @section('content')
@@ -70,8 +70,8 @@
 @endsection
 
 @section('js')
-<script src="{{ Config::get('app.cdn_url') }}plugins/select2/select2.full.min.js"></script>
-<script src="{{ Config::get('app.cdn_url') }}plugins/select2/i18n/zh-CN.js"></script>
+<script src="{{ Setting::get('cdn_url', '/') }}plugins/select2/select2.full.min.js"></script>
+<script src="{{ Setting::get('cdn_url', '/') }}plugins/select2/i18n/zh-CN.js"></script>
 <script>
     $(function(){
         $("#oauth_client_scope").select2({

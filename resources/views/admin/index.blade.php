@@ -50,5 +50,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ Config::get('app.cdn_url') }}assets/js/pages/dashboard.js"></script>
+    <script src="{{ Setting::get('cdn_url', '/') }}assets/js/pages/dashboard.js"></script>
 @endsection

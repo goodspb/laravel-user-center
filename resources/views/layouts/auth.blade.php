@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     @yield('meta')
-    <title>@yield('title', '') | {{ Config::get('app.name') }}</title>
+    <title>@yield('title', '') | {{ Setting::get('app_name', '') }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -16,7 +16,7 @@
     <!-- Load google font-->
     <link rel="stylesheet" href="//fonts.gmirror.org/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"  media="none" onload="if(media!='all')media='all'">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ Config::get('app.cdn_url') }}assets/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{ Setting::get('cdn_url', '/') }}assets/css/AdminLTE.min.css">
     @yield('css')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

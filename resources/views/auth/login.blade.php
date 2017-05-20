@@ -4,7 +4,7 @@
 
 @section('css')
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{ Config::get('app.cdn_url') }}plugins/iCheck/square/blue.css">
+    <link rel="stylesheet" href="{{ Setting::get('cdn_url', '/') }}plugins/iCheck/square/blue.css">
 @endsection
 
 @section('body-class') hold-transition login-page @endsection
@@ -12,7 +12,7 @@
 @section('content')
 <div class="login-box">
     <div class="login-logo">
-        <a href="/"><b>{{ Config::get('app.name') }}</b>{{ trans('auth.login') }}</a>
+        <a href="/"><b>{{ Setting::get('app_name', '') }}</b>{{ trans('auth.login') }}</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -52,7 +52,7 @@
 
 @section('js')
 <!-- iCheck -->
-<script src="{{ Config::get('app.cdn_url') }}plugins/iCheck/icheck.min.js"></script>
+<script src="{{ Setting::get('cdn_url', '/') }}plugins/iCheck/icheck.min.js"></script>
 <script>
     $(function () {
         $('input').iCheck({

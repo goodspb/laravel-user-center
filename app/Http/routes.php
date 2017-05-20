@@ -43,6 +43,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin', 'middleware' => ['au
     Route::controller('/permission', 'PermissionController');
     Route::controller('/role', 'RoleController');
     Route::controller('/user', 'UserController');
+    Route::controller('/setting', 'SettingController');
     Route::controller('/', 'IndexController');
 });
 

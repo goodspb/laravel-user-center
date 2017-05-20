@@ -6,6 +6,8 @@ return [
     'profile' => '资料',
     'menu' => '主菜单',
     'menu_list' => [
+        'site' => '站点管理',
+        'setting' => '站点配置',
         'entrust' => '权限角色管理',
         'role' => '角色管理',
         'role_list' => '角色列表',
@@ -44,6 +46,10 @@ return [
         'name' => '权限标识',
         'display_name' => '权限名称',
         'description' => '权限描述'
+    ],
+    'settings' => [
+        'app_name' => '系统名称',
+        'cdn_url' => 'CDN地址',
     ],
     'created_at' => '创建日期',
     'updated_at' => '更新日期',

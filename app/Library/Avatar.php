@@ -3,6 +3,7 @@ namespace App\Library;
 
 use Config;
 use Illuminate\Routing\UrlGenerator;
+use Setting;
 
 class Avatar
 {
@@ -13,7 +14,7 @@ class Avatar
      */
     public static function getAvatar($avatar = '')
     {
-        $cdnUrl = rtrim(Config::get('app.cdn_url'), '/');
+        $cdnUrl = rtrim(Setting::get('cdn_url', '/'), '/');
         if (!$avatar) {
             return $cdnUrl . '/' . ltrim(Config::get('auth.default_avatar'), '/');
         }

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php $cdnUrl = Config::get('app.cdn_url'); ?>
+    <?php $cdnUrl = Setting::get('cdn_url', '/'); ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
-    <title>@yield('title', '') | {{ Config::get('app.name') }}</title>
+    <title>@yield('title', '') | {{ Setting::get('app_name', '') }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->

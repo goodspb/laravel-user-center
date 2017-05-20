@@ -7,7 +7,7 @@
 @section('content')
 <div class="register-box">
     <div class="register-logo">
-        <a href="{{ url('/') }}"><b>{{ Config::get('app.name') }}</b>{{ trans('auth.reset') }}</a>
+        <a href="{{ url('/') }}"><b>{{ Setting::get('app_name', '') }}</b>{{ trans('auth.reset') }}</a>
     </div>
 
     <div class="register-box-body">
