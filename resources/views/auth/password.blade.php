@@ -7,7 +7,7 @@
 @section('content')
 <div class="login-box">
     <div class="login-logo">
-        <a href="/"><b>{{ Config::get('app.name') }}</b>{{ trans('auth.forgot') }}</a>
+        <a href="/"><b>{{ Setting::get('app_name', '') }}</b>{{ trans('auth.forgot') }}</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">

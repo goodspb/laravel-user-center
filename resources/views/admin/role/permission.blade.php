@@ -3,7 +3,7 @@
 @section('title') {{ trans('admin.menu_list.role') }} @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ Config::get('app.cdn_url') }}plugins/iCheck/all.css">
+    <link rel="stylesheet" href="{{ Setting::get('cdn_url', '/') }}plugins/iCheck/all.css">
 @endsection
 
 @section('content')
@@ -62,7 +62,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ Config::get('app.cdn_url') }}plugins/iCheck/icheck.min.js"></script>
+    <script src="{{ Setting::get('cdn_url', '/') }}plugins/iCheck/icheck.min.js"></script>
     <script>
         $(function(){
             //iCheck for checkbox and radio inputs

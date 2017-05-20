@@ -4,13 +4,13 @@
 
 @section('css')
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{ Config::get('app.cdn_url') }}plugins/iCheck/square/blue.css">
+    <link rel="stylesheet" href="{{ Setting::get('cdn_url', '/') }}plugins/iCheck/square/blue.css">
 @endsection
 
 @section('body-class') hold-transition register-page @endsection
 
 @section('content')
-    <?php $appName = Config::get('app.name'); ?>
+    <?php $appName = Setting::get('app_name', ''); ?>
     <div class="register-box">
         <div class="register-logo">
             <a href="{{ url('/') }}"><b>{{ $appName }}</b>{{ trans('auth.register') }}</a>
@@ -197,7 +197,7 @@
 
 @section('js')
     <!-- iCheck -->
-    <script src="{{ Config::get('app.cdn_url') }}plugins/iCheck/icheck.min.js"></script>
+    <script src="{{ Setting::get('cdn_url', '/') }}plugins/iCheck/icheck.min.js"></script>
     <script>
         $(function () {
             $('input').iCheck({
