@@ -18,20 +18,24 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border">
-                        <h3 class="box-title">前端</h3>
+                        <h3 class="box-title">服务器参数</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <p>后台模板: <a href="https://almsaeedstudio.com/themes/AdminLTE/index2.html"> AdminLTE2 </a> </p>
-                        <p>有需要请自行下载</p>
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-header with-border">
-                        <h3 class="box-title">后端</h3>
-                    </div>
-                    <div class="box-body">
-                        <p>后端框架 <a href="https://laravel.com/docs/5.1"> Laravel 5.1 </a> </p>
-                        <p>有需要请查阅使用文档</p>
+                        <dl class="dl-horizontal">
+                            <dt>服务器系统</dt>
+                            <dd>{{ $status['system'] }}</dd>
+                            <dt>PHP运行方式</dt>
+                            <dd>{{ $status['php_sapi_name'] }}</dd>
+                            <dt>PHP版本号</dt>
+                            <dd>{{ $status['php_version'] }}</dd>
+                            <dt>服务器地址</dt>
+                            <dd>{{ $status['host'] }}</dd>
+                            <dt>客户端地址</dt>
+                            <dd>{{ $status['remote_addr'] }}</dd>
+                            <dt>HTTP协议版本</dt>
+                            <dd>{{ $status['server_protocol'] }}</dd>
+                        </dl>
                     </div>
                 </div>
                 <!-- /.box -->
