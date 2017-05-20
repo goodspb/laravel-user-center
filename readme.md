@@ -30,6 +30,7 @@
 3. 权限包 Entrust , [文档](https://github.com/Zizaco/entrust)
 4. Oauth2.0 的原理和规范, 请查看 [阮一峰老师的博文](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)
 5. oauth2-server-laravel包, [文档](https://github.com/lucadegasperi/oauth2-server-laravel/tree/master/docs#readme)
+6. aravel-settings [文档](https://github.com/anlutro/laravel-settings)
 
 ### 现在的 Oauth 接口说明
 

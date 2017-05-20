@@ -13,19 +13,19 @@ class ClientController extends BaseController
 
     public function getIndex()
     {
-        return redirect('admin/oauth/client/list');
+        return $this->redirect('admin/oauth/client/list');
     }
 
     public function getList()
     {
-        return $this->getBaseList('oauthClient', 'admin.oauth.client.list');
+        return $this->getBaseList('oauthClient', 'oauth.client.list');
     }
 
     public function getAdd()
     {
         $this->getAllScopes();
         $this->getAllGrant();
-        return view('admin.oauth.client.item');
+        return $this->render('oauth.client.item');
     }
 
     public function postAdd(Request $request)
@@ -42,7 +42,7 @@ class ClientController extends BaseController
     {
         $this->getAllScopes();
         $this->getAllGrant();
-        return $this->getBaseItem('oauthClient', $id, 'admin.oauth.client.item');
+        return $this->getBaseItem('oauthClient', $id, 'oauth.client.item');
     }
 
     public function postEdit(Request $request)
@@ -68,22 +68,22 @@ class ClientController extends BaseController
             $client->saveEndpoint(Input::get('oauth_client_redirect_uri'));
             $client->saveScope(Input::get('oauth_client_scope'));
             $client->saveGrant(Input::get('oauth_client_grant'));
-            return redirect()->back()->with('success', trans("common.{$type}_success"));
+            return $this->successReturn(trans("common.{$type}_success"));
         }
-        return redirect()->back()->withErrors(['error' => trans("common.{$type}_fail")]);
+        return $this->errorReturn(trans("common.{$type}_fail"));
     }
 
     protected function getAllScopes()
     {
         $scopes = OauthScope::all();
-        view()->share('scopes', $scopes);
+        $this->assign('scopes', $scopes);
         return $scopes;
     }
 
     protected function getAllGrant()
     {
         $grants = OauthGrant::all();
-        view()->share('grants', $grants);
+        $this->assign('grants', $grants);
         return $grants;
     }
 

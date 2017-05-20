@@ -4,15 +4,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Auth, Response, Input, Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Setting;
 
 class BaseController extends Controller
 {
-    public $authUser;
+    protected $authUser;
+    protected $settings;
 
     public function __construct()
     {
         $this->authUser  = Auth::user();
-        view()->share('auth_user', $this->authUser);
+        $this->settings = Setting::all();
+        $this->assign([
+            'auth_user' => $this->authUser,
+            'settings' => $this->settings,
+        ]);
     }
 
     /**
@@ -27,7 +33,7 @@ class BaseController extends Controller
         $model = $this->getModel($name);
         $orderKey = is_null($orderKey) ? $model->getKeyName() : $orderKey;
         $lists = $model->orderBy($orderKey, $orderSort)->paginate(10);
-        return view($view, ['lists'=> $lists]);
+        return $this->render($view, ['lists'=> $lists]);
     }
 
     /**
@@ -71,4 +77,69 @@ class BaseController extends Controller
             return Response::json(['status' => 0, 'msg'=> trans('common.delete_fail')]);
         }
     }
+
+    /**
+     * @param $msg
+     * @param null $url
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function errorReturn($msg, $url = null)
+    {
+        $redirect = redirect();
+        if (is_null($url)) {
+            $redirect = $redirect->back();
+        } else {
+            $redirect = $redirect->to($url);
+        }
+        return $redirect->withErrors(['error' => $msg ]);
+    }
+
+    /**
+     * @param $msg
+     * @param null $url
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function successReturn($msg, $url = null)
+    {
+        $redirect = redirect();
+        if (is_null($url)) {
+            $redirect = $redirect->back();
+        } else {
+            $redirect = $redirect->to($url);
+        }
+        return $redirect->with('success', $msg);
+    }
+
+    /**
+     * @param null $view
+     * @param array $data
+     * @param string $prefix
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    protected function render($view = null, $data = [], $prefix = 'admin.')
+    {
+        return view($prefix.$view, $data);
+    }
+
+    /**
+     * @param null $to
+     * @param int $status
+     * @param array $headers
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    protected function redirect($to = null, $status = 302, $headers = [])
+    {
+        return redirect($to, $status, $headers, true);
+    }
+
+    /**
+     * @param $key
+     * @param null $value
+     * @return mixed
+     */
+    protected function assign($key, $value = null)
+    {
+        return view()->share($key, $value);
+    }
+
 }

@@ -10,17 +10,17 @@ class ScopeController extends BaseController
 {
     public function getIndex()
     {
-        return redirect('admin/oauth/scope/list');
+        return $this->redirect('admin/oauth/scope/list');
     }
 
     public function getList()
     {
-        return $this->getBaseList('oauthScope', 'admin.oauth.scope.list');
+        return $this->getBaseList('oauthScope', 'oauth.scope.list');
     }
 
     public function getAdd()
     {
-        return view('admin.oauth.scope.item');
+        return $this->render('oauth.scope.item');
     }
 
     public function postAdd(Request $request)
@@ -35,7 +35,7 @@ class ScopeController extends BaseController
 
     public function getEdit($id)
     {
-        return $this->getBaseItem('oauthScope', $id, 'admin.oauth.scope.item');
+        return $this->getBaseItem('oauthScope', $id, 'oauth.scope.item');
     }
 
     public function postEdit(Request $request)
@@ -52,9 +52,9 @@ class ScopeController extends BaseController
         $scope->description = Input::get('oauth_scope_description');
         $type = $scope->isNew() ? 'add' : 'edit';
         if ($scope->save()) {
-            return redirect()->back()->with('success', trans("common.{$type}_success"));
+            return $this->successReturn(trans("common.{$type}_success"));
         }
-        return redirect()->back()->withErrors(['error' => trans("common.{$type}_fail")]);
+        return $this->errorReturn(trans("common.{$type}_fail"));
     }
 
     public function postDelete()
