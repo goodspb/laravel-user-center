@@ -164,6 +164,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,              //IDE-helper
         Barryvdh\Debugbar\ServiceProvider::class,                               //Debugbar
         Intervention\Image\ImageServiceProvider::class,                         //Image处理
+        anlutro\LaravelSettings\ServiceProvider::class,                         //Setting
         LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class, //Oauth2.0
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,          //Oauth2.0
     ],
@@ -220,6 +221,7 @@ return [
         'Entrust'       => Zizaco\Entrust\EntrustFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Setting' => anlutro\LaravelSettings\Facade::class,
         'Authorizer' => LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
     ],
 

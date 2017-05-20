@@ -4,15 +4,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Auth, Response, Input, Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Setting;
 
 class BaseController extends Controller
 {
-    public $authUser;
+    protected $authUser;
+    protected $settings;
 
     public function __construct()
     {
         $this->authUser  = Auth::user();
-        view()->share('auth_user', $this->authUser);
+        $this->settings = Setting::all();
+        view()->share([
+            'auth_user' => $this->authUser,
+            'settings' => $this->settings,
+        ]);
     }
 
     /**
@@ -70,5 +76,37 @@ class BaseController extends Controller
         } catch (Exception $e) {
             return Response::json(['status' => 0, 'msg'=> trans('common.delete_fail')]);
         }
+    }
+
+    /**
+     * @param $msg
+     * @param null $url
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function errorReturn($msg, $url = null)
+    {
+        $redirect = redirect();
+        if (is_null($url)) {
+            $redirect = $redirect->back();
+        } else {
+            $redirect = $redirect->to($url);
+        }
+        return $redirect->withErrors(['error' => $msg ]);
+    }
+
+    /**
+     * @param $msg
+     * @param null $url
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function successReturn($msg, $url = null)
+    {
+        $redirect = redirect();
+        if (is_null($url)) {
+            $redirect = $redirect->back();
+        } else {
+            $redirect = $redirect->to($url);
+        }
+        return $redirect->with('success', $msg);
     }
 }
