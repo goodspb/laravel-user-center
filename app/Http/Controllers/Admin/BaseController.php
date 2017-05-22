@@ -49,7 +49,7 @@ class BaseController extends Controller
         if (!$item) {
             throw new NotFoundHttpException;
         }
-        return is_null($view) ? $item : view($view, ['item' => $item]);
+        return is_null($view) ? $item : $this->render($view, ['item' => $item]);
     }
 
     /**
