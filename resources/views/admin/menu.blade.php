@@ -4,50 +4,26 @@
     <section class="sidebar">
         <ul class="sidebar-menu">
             <li class="header">{{ trans('admin.menu') }}</li>
-            <li class="active treeview">
-                <a href="#">
-                    <i class="fa fa-files-o"></i>
-                    <span>{{ trans('admin.menu_list.site') }}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ url('admin/setting') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.setting') }}</a></li>
-                </ul>
-            </li>
-            <li class="active treeview">
-                <a href="#">
-                    <i class="fa fa-files-o"></i>
-                    <span>{{ trans('admin.menu_list.user') }}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ url('admin/user/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.user_list') }}</a></li>
-                    <li><a href="{{ url('admin/user/add') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.user_add') }}</a></li>
-                </ul>
-            </li>
-            <li class="active treeview">
-                <a href="#">
-                    <i class="fa fa-files-o"></i>
-                    <span>{{ trans('admin.menu_list.entrust') }}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ url('admin/role/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.role') }}</a></li>
-                    <li><a href="{{ url('admin/permission/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.permission') }}</a></li>
-                </ul>
-            </li>
-            <li class="active treeview">
-                <a href="#">
-                    <i class="fa fa-files-o"></i>
-                    <span>{{ trans('admin.menu_list.oauth') }}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ url('admin/oauth/client/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.oauth_client') }}</a></li>
-                    <li><a href="{{ url('admin/oauth/scope/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.oauth_scope') }}</a></li>
-{{--                    <li><a href="{{ url('admin/oauth/grant/list') }}"><i class="fa fa-circle-o"></i> {{ trans('admin.menu_list.oauth_grant') }}</a></li>--}}
-                </ul>
-            </li>
+            @foreach($menus as $menu)
+                <li class="active treeview">
+                    <a href="{{ url(array_get($menu, 'url', '#')) }}">
+                        <i class="{!! array_get($menu, 'icon', 'fa fa-files-o') !!}"></i>
+                        <span>{{ trans(array_get($menu, 'label', '')) }}</span>
+                        {!! array_has($menu, 'children') && !empty(array_get($menu, 'children')) ? '<i class="fa fa-angle-left pull-right"></i>' : '' !!}
+                    </a>
+                    @if (array_has($menu, 'children') && !empty($children = array_get($menu, 'children')))
+                        <ul class="treeview-menu">
+                            @foreach($children as $childrenMenu)
+                                <li>
+                                    <a href="{{ url(array_get($childrenMenu, 'url', '#')) }}">
+                                        <i class="{!! array_get($childrenMenu, 'icon', 'fa fa-circle-o') !!}"></i> {{ trans(array_get($childrenMenu, 'label', '')) }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </li>
+            @endforeach
         </ul>
     </section>
     <!-- /.sidebar -->

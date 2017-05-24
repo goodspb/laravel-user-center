@@ -5,19 +5,23 @@ use App\Http\Controllers\Controller;
 use Auth, Response, Input, Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Setting;
+use Config;
 
 class BaseController extends Controller
 {
     protected $authUser;
     protected $settings;
+    protected $menus = [];
 
     public function __construct()
     {
         $this->authUser  = Auth::user();
         $this->settings = Setting::all();
+        $this->menus = Config::get('menus.admin');
         $this->assign([
             'auth_user' => $this->authUser,
             'settings' => $this->settings,
+            'menus' => $this->menus,
         ]);
     }
 
