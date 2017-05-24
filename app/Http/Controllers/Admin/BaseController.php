@@ -2,16 +2,33 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Auth, Response, Input, Exception;
+use Auth, Response, Input;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Setting;
 use Config;
 
 class BaseController extends Controller
 {
+    /**
+     * @var \App\Models\User|null
+     */
     protected $authUser;
+
+    /**
+     * @var array
+     */
     protected $settings;
+
+    /**
+     * @var array|mixed
+     */
     protected $menus = [];
+
+    /**
+     * 模板前缀
+     * @var string
+     */
+    protected $viewPrefix = 'admin.';
 
     public function __construct()
     {
@@ -44,14 +61,14 @@ class BaseController extends Controller
      * @param $name
      * @param $id
      * @param null $view
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View | \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View | \App\Models\Model
      */
     protected function getBaseItem($name, $id, $view = null)
     {
         $model = $this->getModel($name);
         $item = $model->find($id);
         if (!$item) {
-            throw new NotFoundHttpException;
+            $item = new $model();
         }
         return is_null($view) ? $item : $this->render($view, ['item' => $item]);
     }
@@ -71,79 +88,10 @@ class BaseController extends Controller
 
     protected function doDelete($modelName)
     {
-        try{
-            $item = $this->getBaseItem($modelName, Input::get('id'));
-            if ($item->delete()){
-                return Response::json(['status'=>1, 'msg'=> trans('common.delete_success')]);
-            }
-            return Response::json(['status'=> 0, 'msg'=> trans('common.delete_fail')]);
-        } catch (Exception $e) {
-            return Response::json(['status' => 0, 'msg'=> trans('common.delete_fail')]);
+        $item = $this->getBaseItem($modelName, Input::get('id'));
+        if ($item->isNew() && $item->delete()){
+            return Response::json(['status'=>1, 'msg'=> trans('common.delete_success')]);
         }
+        return Response::json(['status'=> 0, 'msg'=> trans('common.delete_fail')]);
     }
-
-    /**
-     * @param $msg
-     * @param null $url
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function errorReturn($msg, $url = null)
-    {
-        $redirect = redirect();
-        if (is_null($url)) {
-            $redirect = $redirect->back();
-        } else {
-            $redirect = $redirect->to($url);
-        }
-        return $redirect->withErrors(['error' => $msg ]);
-    }
-
-    /**
-     * @param $msg
-     * @param null $url
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function successReturn($msg, $url = null)
-    {
-        $redirect = redirect();
-        if (is_null($url)) {
-            $redirect = $redirect->back();
-        } else {
-            $redirect = $redirect->to($url);
-        }
-        return $redirect->with('success', $msg);
-    }
-
-    /**
-     * @param null $view
-     * @param array $data
-     * @param string $prefix
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    protected function render($view = null, $data = [], $prefix = 'admin.')
-    {
-        return view($prefix.$view, $data);
-    }
-
-    /**
-     * @param null $to
-     * @param int $status
-     * @param array $headers
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    protected function redirect($to = null, $status = 302, $headers = [])
-    {
-        return redirect($to, $status, $headers, true);
-    }
-
-    /**
-     * @param $key
-     * @param null $value
-     * @return mixed
-     */
-    protected function assign($key, $value = null)
-    {
-        return view()->share($key, $value);
-    }
-
 }
