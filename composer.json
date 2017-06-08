@@ -12,6 +12,7 @@
         "zizaco/entrust": "5.2.x-dev",
         "intervention/image": "2.3.7",
         "anlutro/l4-settings": "^0.5.0",
+        "doctrine/dbal": "^2.5",
         "lucadegasperi/oauth2-server-laravel": "5.0.*"
     },
     "require-dev": {
